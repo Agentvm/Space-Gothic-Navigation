@@ -5,9 +5,13 @@ using UnityEngine.UI;
 public class InfoTag : MonoBehaviour {
 
     [SerializeField] private Text info_text; // info about object under cursor
-    private Vector2 offset = new Vector2 (80, 60); // from cursor
 
     GameObject hit;
+
+    void OnEnable ()
+    {
+        disableDisplay ();
+    }
 
     // Update is called once per frame
     void Update ()
@@ -15,23 +19,21 @@ public class InfoTag : MonoBehaviour {
         // get the object the mouse is pointing on
         hit = Camera.main.MouseObject (); // extension method, see script at top level
 
-        if ( hit != null )
+        if ( hit != null)
         {
-
-
             // get the reference to the script attached to the ingredient the mouse is pointing on
             if ( hit.tag == "Player Ship" )
             {
                 // traverse the transform parent tree to find the parent with the script attached
-                Ship script_reference = hit.transform.gameObject.GetComponent<Ship> ();
-                Transform tf = this.transform;
-                while (script_reference == null )              
-                {
-                    tf = tf.parent;
-                    if ( tf.tag != "Player Ship" ) // some weird error made tf become the Canvas and from there it all went downhill
-                        return;
-                    script_reference = tf.GetComponent<Ship> ();
-                }
+                Ship script_reference = Ship.Instance ();
+                //Transform tf = this.transform;
+                //while ( script_reference == null )
+                //{
+                //    tf = tf.parent;
+                //    if ( tf.tag != "Player Ship" ) // some weird error made tf become the Canvas and from there it all went downhill
+                //        return;
+                //    script_reference = tf.GetComponent<Ship> ();
+                //}
 
                 info_text.text = "Player Ship"
                                 + "\nName: " + script_reference.name
@@ -98,23 +100,29 @@ public class InfoTag : MonoBehaviour {
 
     }
 
-    // enables text and sets it to mouse position
+    // enables text and sets it to mouse position, applying offset
     void display ()
     {
-        offset.x = this.GetComponent<Text> ().rectTransform.rect.width / 2 + 20;
-        offset.y = this.GetComponent<Text> ().rectTransform.rect.height / 2;
-        Vector2 modified_offset = new Vector2 (Mathf.Abs (offset.x), Mathf.Abs (offset.y ));
-        if ( Input.mousePosition.x > Screen.width/2 )
-            modified_offset.x *= -1;
-        if ( Input.mousePosition.y > Screen.height/2 )
-            modified_offset.y *= -1;
 
-        transform.position = Input.mousePosition + new Vector3 (modified_offset.x, modified_offset.y, 0f);
+        // compute offset (based on empirical values)
+        float x_offset = info_text.rectTransform.rect.width /2 + 20;
+        float y_offset = info_text.rectTransform.rect.height /2;
+
+        // ensure the text panel doesn't flow out of screen
+        Vector3 screen_space = Camera.main.WorldToViewportPoint (hit.transform.position);
+        if ( screen_space.x > 0.5f )
+            x_offset *= -1;
+        if ( screen_space.y > 0.5f )
+            y_offset *= -1;
+
+        // apply changes to text transform
+        transform.position = Input.mousePosition + new Vector3 (x_offset, y_offset, 0f);
         info_text.enabled = true;
     }
 
     void disableDisplay ()
     {
+        info_text.text = "";
         info_text.enabled = false;
     }
 
