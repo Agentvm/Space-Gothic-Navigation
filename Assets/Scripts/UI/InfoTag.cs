@@ -103,7 +103,6 @@ public class InfoTag : MonoBehaviour {
     // enables text and sets it to mouse position, applying offset
     void display ()
     {
-
         // compute offset (based on empirical values)
         float x_offset = info_text.rectTransform.rect.width /2 + 20;
         float y_offset = info_text.rectTransform.rect.height /2;

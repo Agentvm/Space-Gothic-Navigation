@@ -114,12 +114,12 @@ public class OrbitCameraZoom : MonoBehaviour
     void LateUpdate ()
     {
         // If Control and Alt and Middle button? ZOOM!
-        if ( Input.GetMouseButton (2) && Input.GetKey (KeyCode.LeftAlt) && Input.GetKey (KeyCode.LeftControl) || Input.GetKey (KeyCode.LeftAlt) && Input.GetMouseButton (0) )
+        if ( Input.GetMouseButton (2) && Input.GetKey (KeyCode.LeftAlt) && Input.GetKey (KeyCode.LeftControl) || Input.GetKey (KeyCode.LeftControl) && Input.GetMouseButton (0) )
         {
             desiredDistance -= Input.GetAxis ("Mouse Y") * Time.deltaTime * zoomRate * 0.125f * Mathf.Abs (desiredDistance);
         }
         // If middle mouse and left alt are selected? ORBIT
-        else if ( Input.GetMouseButton (1) || Input.GetKey (KeyCode.LeftControl) && Input.GetMouseButton (0)/*&& Input.GetKey (KeyCode.LeftAlt) */)
+        else if ( Input.GetMouseButton (1) || Input.GetKey (KeyCode.LeftAlt) && Input.GetMouseButton (0)/*&& Input.GetKey (KeyCode.LeftAlt) */)
         {
             xDeg += Input.GetAxis ("Mouse X") * xSpeed * 0.02f;
             yDeg -= Input.GetAxis ("Mouse Y") * ySpeed * 0.02f;
