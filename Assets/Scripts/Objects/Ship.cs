@@ -11,6 +11,7 @@ public class Ship : MonoBehaviour {
     private List<Vector3> path = new List<Vector3>();
     private LineRenderer line_renderer_reference;
     private string description;
+    private ModalPanel modal_panel;
 
     // Ship Values
     private double max_jump_distance = 15.0; // lightyears
@@ -106,6 +107,11 @@ public class Ship : MonoBehaviour {
         line_renderer_reference = this.GetComponent<LineRenderer> ();
     }
 
+    void Start ()
+    {
+        modal_panel = ModalPanel.Instance ();
+    }
+
     /// <summary>
     /// Recursively sets all Childs of this gameobject to the value specified by tag_name
     /// </summary>
@@ -154,7 +160,7 @@ public class Ship : MonoBehaviour {
     {
         if ( !galaxy.get_system (this.transform.position) )
         {
-            Debug.Log ("[Error]: You are currently not in range of a suitable space station.");
+            modal_panel.announcement ("Im leeren Weltraum", "In unserer Nähe gibt es keine geeignete Raumstation, an der wir auftanken können.");
             return;
         }
 
@@ -173,7 +179,7 @@ public class Ship : MonoBehaviour {
     {
         if (!galaxy.get_system (this.transform.position))
         {
-            Debug.Log ("[Error]: You are currently not in range of a suitable space station.");
+            modal_panel.announcement ("Im leeren Weltraum", "In unserer Nähe gibt es keine geeignete Raumstation, an der wir das Schiff reparieren können.");
             return;
         }
         
@@ -196,7 +202,7 @@ public class Ship : MonoBehaviour {
             set_goal (galaxy.get_system (goal_system).SpaceStation );
         else
         {
-            Debug.Log ("[Error]: The desired system \"" + goal_system + "\" could not be found in the databank.");
+            modal_panel.announcement ("Error", "Das Zielsystem \"" + goal_system + "\" ist in der Datenbank nicht vorhanden.");
             return;
         }
 
@@ -328,9 +334,9 @@ public class Ship : MonoBehaviour {
         {
             StarSystem goal_system = galaxy.get_system (goal);
             if ( goal_system != null )
-                Debug.Log ("[Error]: You currently are docked at the space station of " + goal_system.name + " at " + goal_system.transform.position);
+                modal_panel.announcement ("Pfadplanung abgebrochen", "Wir befinden uns bereits am Zielort " + goal_system.name + " bei " + goal_system.transform.position);
             else
-                Debug.Log ("[Error]: The goal position " + goal + " is your current position: " + this.transform.position + ". Pathplanning stopped.");
+                modal_panel.announcement ("Pfadplanung abgebrochen", "Unsere Zielposition " + goal + " entspricht unserer jetzigen Position: " + this.transform.position + ".");
 
             return false;
         }
@@ -371,7 +377,7 @@ public class Ship : MonoBehaviour {
         }
 
         // failure
-        Debug.Log ("[Error]: The pathplanner stopped, too many iterations: " + (iterations) + ". No valid path could be determined.");
+        modal_panel.announcement ("Fehler in der Pfadplanung", "Die Pfadplanung wurde nach " + (iterations) + " Iterationen gestoppt. Kein gültiger Pfad konnte bestimmt werden.");
         //print_path ();
         plot_path ();        
 
@@ -435,7 +441,7 @@ public class Ship : MonoBehaviour {
         }
         else // No route point in double radius found
         {
-            Debug.Log ("[Error]: Route leads into empty space. Pathplanning stopped, no valid path could be determined.");
+            modal_panel.announcement ("Fehler in der Pfadplanung", "Die Route führt in den leeren Raum. Die Pfadplanung wurde gestoppt, kein gültiger Pfad konnte bestimmt werden.");
             plot_path ();
             path.Clear ();
 
@@ -475,10 +481,10 @@ public class Ship : MonoBehaviour {
     {
         // consume fuel
         if ( LaseumUnits > 0 ) LaseumUnits -= 1;
-        else if (LaseumEmergencyUnit)
+        else if ( LaseumEmergencyUnit )
             LaseumEmergencyUnit = false;
         else
-            ModalPanel.Instance ().announcement ("Fehlercode: D5", "Es sind keinerlei Treibstoffreserven mehr übrig.");
+            modal_panel.announcement ("Fehlercode: D5", "Es sind keinerlei Treibstoffreserven mehr übrig.");
 
         print ("doing the jump");
 
