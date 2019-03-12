@@ -1,9 +1,26 @@
 ﻿/*
+ * 
+
+
+ PLEASE rewrite JourneyStepValidater found in ShipInterface !!!
+    - for starters, make it a standalone class
+    - maybe use delegates
+    - maybe use Unity waitUntil & Coroutines
+
+    but don't leave this abomination of mutated code to suffer it's impure existance!
+
+ * 
+ * 
+ * 
+
+
+
+
 Camera Movement: Panning is blocked, because OrbitCameraZoom focuses on Ship (or Galaxy) in it's update Loop
 Activate InfoTag after a short delay
 Space Gothic xyz standard to Unity xyz standard
 Animation? https://www.youtube.com/watch?v=z_tgTU16hXs
-GL library occludes GUI; GL library: Add Jump end Points
+GL library: Add Jump end Points (maybe draw a circle around goal?)
 Preise anpassen, Schiffsgewicht->Laseumgewicht
 
     1. Planet & Sun als Asset speichern und Sternenkarte anhand der ausgelesenen Infos generieren. (check)

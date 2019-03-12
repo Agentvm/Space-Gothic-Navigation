@@ -50,6 +50,8 @@ public class ShipInterface : MonoBehaviour {
 
     // private variables
     private float rotation_speed = 100f;
+    private float button_cooldown = 0.4f;
+    private float last_key_press = 0f;
 
 
     void Start ()
@@ -188,8 +190,12 @@ public class ShipInterface : MonoBehaviour {
         update_text_values ();
 
         // Jump
-        if ( Input.GetKeyDown ("space") )
+        if ( Input.GetKeyUp ("space") && Time.time - last_key_press > button_cooldown )
+        {
+            last_key_press = Time.time;
             ClickInitiateJump ();
+        }
+            
 
         // Control Panel Logic
         if ( Input.GetKeyDown ("tab") )

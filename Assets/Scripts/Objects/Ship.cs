@@ -17,9 +17,9 @@ public class Ship : MonoBehaviour {
     private Character pilot = new Character ();
     private List<Character> crew = new List<Character> ();
     private double max_jump_distance = 15.0; // lightyears
-    private double damage = 3;
+    private double damage = -300000;
     //private double max_damage = 100;
-    private int laseum_units = 2;
+    private int laseum_units = 200000;
     private bool laseum_emergency_unit = true;
     private double budget = 0;
 
