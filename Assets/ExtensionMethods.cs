@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
 
 public static class ExtensionMethods {
 
@@ -16,7 +17,9 @@ public static class ExtensionMethods {
 
         if ( Physics.Raycast (ray, out hit, 1000.0f) )
         {
-            return hit.transform.gameObject;
+            // Check if the mouse was clicked over a UI element
+            if ( !EventSystem.current.IsPointerOverGameObject () )
+                return hit.transform.gameObject;
         }
 
         return null;
