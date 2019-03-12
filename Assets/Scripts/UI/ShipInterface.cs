@@ -187,10 +187,6 @@ public class ShipInterface : MonoBehaviour {
     {
         update_text_values ();
 
-        // Jump
-        if ( Input.GetKeyDown ("space") )
-            ClickInitiateJump ();
-
         // Control Panel Logic
         if ( Input.GetKeyDown ("tab") )
             rotate_control_panel = true;

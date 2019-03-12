@@ -5,54 +5,29 @@ using UnityEngine;
 public class LineRenderer : MonoBehaviour
 {
     // When added to an object, it can be used to draw lines on the basis of Vectors
-    private List<Vector3> lines = new List<Vector3>(); // lines to draw
-    private List<int> white_lines = new List<int>(); // don't draw these indices
+    public List<Vector3> lines = new List<Vector3>(); // lines to draw
+    public List<int> white_lines = new List<int>(); // don't draw these indices
     private bool currently_rendering = false;
-    private Color color = new Color (1, 0, 0, 0.7f );
+    private Color color = new Color (1, 0, 0 );
 
-    [SerializeField]/*static*/ Material lineMaterial;
-    /*static*/ void CreateLineMaterial ()
+    static Material lineMaterial;
+    static void CreateLineMaterial ()
     {
         if ( !lineMaterial )
         {
             // Unity has a built-in shader that is useful for drawing
             // simple colored things.
             Shader shader = Shader.Find("Hidden/Internal-Colored");
-            //Shader shader = Shader.Find("Lines/Colored Blended");
-            //Shader shader = Shader.Find("Unlit/Texture");
-            //"Standard", "Unlit/Texture", "Legacy Shaders/Diffuse"
             lineMaterial = new Material (shader);
-            
-            
             lineMaterial.hideFlags = HideFlags.HideAndDontSave;
             // Turn on alpha blending
             lineMaterial.SetInt ("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
-            
-            // Try to put it behind UI
-            lineMaterial.SetInt ("_RenderQueue", (int)UnityEngine.Rendering.RenderQueue.Background);
-            lineMaterial.SetInt ("_Queue", (int)UnityEngine.Rendering.RenderQueue.Background);
-            lineMaterial.renderQueue = 1000;
-
             lineMaterial.SetInt ("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
             // Turn backface culling off
             lineMaterial.SetInt ("_Cull", (int)UnityEngine.Rendering.CullMode.Off);
             // Turn off depth writes
-            lineMaterial.SetInt ("_ZWrite", 1);
-            
-
-            // no longer supported
-            /* lineMaterial = new Material( "Shader \"Lines/Colored Blended\" {" +
-             "SubShader {Tags { \"RenderType\"=\"Opaque\" } Pass { " +
-             "ZWrite On ZTest LEqual Cull Off Fog { Mode Off } " +
-             "BindChannels {" +
-             "Bind \"vertex\", vertex Bind \"color\", color }" +
-             "} } }");*/
+            lineMaterial.SetInt ("_ZWrite", 0);
         }
-    }
-
-    void Awake ()
-    {
-        CreateLineMaterial ();
     }
 
     public void set_default_color (Color col)

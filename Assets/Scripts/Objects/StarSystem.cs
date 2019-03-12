@@ -137,7 +137,7 @@ public class StarSystem : MonoBehaviour {
     public void add_planet ( string planet_name, string planet_type )
     {
         // in line with the other planets; realtive to system
-        Vector3 position = new Vector3 (this.transform.localScale.x * 1.6f + 0.4f * (planets.Count + 1), 0f, 0f);
+        Vector3 position = new Vector3 (this.transform.localScale.x + 0.2f * (planets.Count + 1), 0f, 0f);
 
         GameObject planet = (GameObject)Instantiate(Resources.Load("Planet"), this.transform );
         planet.GetComponent<Planet> ().initialize (position, planet_name, planet_type, this);

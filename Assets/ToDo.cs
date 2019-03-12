@@ -1,7 +1,8 @@
 ﻿/*
 
-Activate InfoTag after a short delay
+Status sichern (git)
 Space Gothic xyz standard to Unity xyz standard
+Make turn_out_of_screen an ExtensionMethod of Gameobject
 Animation? https://www.youtube.com/watch?v=z_tgTU16hXs
 GL library occludes GUI; GL library: Add Jump end Points
 Preise anpassen, Schiffsgewicht->Laseumgewicht
@@ -27,7 +28,7 @@ Preise anpassen, Schiffsgewicht->Laseumgewicht
 	
 	7. Außenstationen für Systeme animieren
    
-    8. Fancy Colors for Stars + Lighting(check)
+    8. Fancy Colors for Stars + Lighting
 
     9. Add Planets to Star Systems ( Shuttle to Planet )
 

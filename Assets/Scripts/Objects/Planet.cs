@@ -53,7 +53,7 @@ public class Planet : MonoBehaviour {
     private void Start ()
     {
         if (rotation_speed == 0f)
-            rotation_speed = Random.Range (8f, 14) * Vector3.Distance (this.transform.position, this.system.transform.position);
+            rotation_speed = Random.Range (6f, 10) * Vector3.Distance (this.transform.position, this.system.transform.position) * 3;
         if (rotation_axis == Vector3.zero )
             rotation_axis = this.system.transform.up + new Vector3 (Random.Range (0.3f, -0.3f), 1f, Random.Range (0.3f, -0.3f));
     }
