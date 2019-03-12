@@ -116,6 +116,7 @@ public class OrbitCameraZoom : MonoBehaviour
         // If Control and Alt and Middle button? ZOOM!
         if ( Input.GetMouseButton (2) && Input.GetKey (KeyCode.LeftAlt) && Input.GetKey (KeyCode.LeftControl) || Input.GetKey (KeyCode.LeftControl) && Input.GetMouseButton (0) )
         {
+            Debug.Log ("Zooming.");
             desiredDistance -= Input.GetAxis ("Mouse Y") * Time.deltaTime * zoomRate * 0.125f * Mathf.Abs (desiredDistance);
         }
         // If middle mouse and left alt are selected? ORBIT
