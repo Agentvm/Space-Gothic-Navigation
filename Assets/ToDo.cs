@@ -1,5 +1,5 @@
 ﻿/*
-Camera Movement: Panning is blocked, because OrbitCameraZoom focuses on Ship (or Galaxy) in it's update Loop
+
 Activate InfoTag after a short delay
 Space Gothic xyz standard to Unity xyz standard
 Animation? https://www.youtube.com/watch?v=z_tgTU16hXs
