@@ -14,8 +14,6 @@ public class Ship : MonoBehaviour {
     private ModalPanel modal_panel;
 
     // Ship Values
-    private Character pilot = new Character ();
-    private List<Character> crew = new List<Character> ();
     private double max_jump_distance = 15.0; // lightyears
     private double damage = 3;
     //private double max_damage = 100;
@@ -155,11 +153,6 @@ public class Ship : MonoBehaviour {
         // Tag all Ship parts accordingly
         this.tag = "Player Ship";
         tag_childs ("Player Ship", this.transform);
-    }
-
-    public void add_crew_member (Character soon_to_be_member)
-    {
-        crew.Add (soon_to_be_member);
     }
 
 
