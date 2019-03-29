@@ -8,7 +8,7 @@ public class GameCore : MonoBehaviour
     public static GameCore instance = null; // Static instance of GameManager which allows it to be accessed by any other script.
     private GameVariables game_variables;   // Store a reference to our game variables.
 
-    public GameVariables GameVariables
+    public GameVariables GameVariables // call it like: GameCore.instance.GameVariables
     {
         get { return game_variables; }
     }
