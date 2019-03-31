@@ -14,8 +14,8 @@ public class Ship : MonoBehaviour {
     private ModalPanel modal_panel;
 
     // Ship Values
-    private Character pilot = new Character ();
-    private List<Character> crew = new List<Character> ();
+    //private Character pilot = new Character ();
+    //private List<Character> crew = new List<Character> ();
     private double max_jump_distance = 15.0; // lightyears
     private double damage = -300000;
     //private double max_damage = 100;
@@ -157,10 +157,11 @@ public class Ship : MonoBehaviour {
         tag_childs ("Player Ship", this.transform);
     }
 
+    /*
     public void add_crew_member (Character soon_to_be_member)
     {
         crew.Add (soon_to_be_member);
-    }
+    }*/
 
 
     public void refuel ()
@@ -371,9 +372,9 @@ public class Ship : MonoBehaviour {
             if (path.Count > 0 && path[path.Count - 1] == goal)
             {
                 if (path.Count > 2)
-                    turn_ship_to_point (path[2] ); // 0 is the start position, 1 the first step and 2 the second
+                    transform.LookAt (path[2] ); // 0 is the start position, 1 the first step and 2 the second
                 else
-                    turn_ship_to_point (path[1]);
+                    transform.LookAt (path[1]);
                 Debug.Log ("Path planned." );
                 plot_path ();
 
@@ -391,19 +392,6 @@ public class Ship : MonoBehaviour {
         return false;        
     }
 
-
-    /// <summary>
-    /// Make the Ship face a point in space.
-    /// </summary>
-    /// <param name="point">Any Vector 3</param>
-    void turn_ship_to_point (Vector3 point)
-    {
-        //Quaternion quat = new Quaternion (0,0,0,1 );
-        //quat.SetFromToRotation (point, this.transform.position );
-        //this.transform.rotation = quat; // turn ship to next jump goal
-        //transform.Rotate (0, 90, 0 );
-        transform.LookAt (point);
-    }
 
     /// <summary>
     /// Add a System as route point
@@ -496,11 +484,19 @@ public class Ship : MonoBehaviour {
         print ("doing the jump");
 
         // move the ship one step along the path
-        this.transform.position = path[1];
+        //this.transform.position = path[1];
         path.RemoveAt (0);
         if (path.Count > 1)
-            turn_ship_to_point (path[1]);
-        
+            transform.LookAt (path[1]);
+        if (path.Count > 0)
+        {
+            SlerpCoroutine slerp = this.GetComponent<SlerpCoroutine> ();
+
+            slerp.Rotate = false;
+            slerp.setTarget (path[0], transform.rotation);
+        }
+
+
         plot_path ();
 
         // apply damage

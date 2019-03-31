@@ -7,7 +7,7 @@ public class ShipInterface : MonoBehaviour {
 
     public Canvas canvas;
     private Ship ship;
-    private ModalPanel modal_panel;
+    //private ModalPanel modal_panel;
 
     // Control Panel ---
     public GameObject control_panel;
@@ -57,7 +57,7 @@ public class ShipInterface : MonoBehaviour {
     void Start ()
     {
         ship = Ship.Instance (); // There should be only one ship
-        modal_panel = ModalPanel.Instance (); // As with a Modal Panel
+        //modal_panel = ModalPanel.Instance (); // As with a Modal Panel
         initialize_panel_movement ();
         initialize_buttons ();
         
@@ -241,9 +241,6 @@ public class JourneyStepValidater
     private bool damage_check = false;
     private bool cancel = false;
 
-    //DEBUG
-    int iterations = 0;
-
 
     public JourneyStepValidater ()
     {
@@ -330,12 +327,15 @@ public class JourneyStepValidater
             return;
         }
 
-        if ( Vector3.Distance (ship.transform.position, ship.Path[1]) > ship.MaxJumpDistance + 0.1f )
+        if ( ship.Path.Count > 1 )
         {
-            Debug.Log ("[Error]: There must have been an Error in pathplanning, because the next jump is too far to be made.\n" + "Dist: " + Vector3.Distance (ship.transform.position, ship.Path[1]));
-            modal_panel.announcement ("Fehlercode: D1715", "Scheinbar hat es einen Fehler in der Pfadplanung gegeben, da der nächste Routenpunkt nicht innerhalb unserer Sprungreichweite liegt.");
-            cancel_validation ();
-            return;
+            if ( Vector3.Distance (ship.transform.position, ship.Path[1]) > ship.MaxJumpDistance + 0.1f )
+            {
+                Debug.Log ("[Error]: There must have been an Error in pathplanning, because the next jump is too far to be made.\n" + "Dist: " + Vector3.Distance (ship.transform.position, ship.Path[1]));
+                modal_panel.announcement ("Fehlercode: D1715", "Scheinbar hat es einen Fehler in der Pfadplanung gegeben, da der nächste Routenpunkt nicht innerhalb unserer Sprungreichweite liegt.");
+                cancel_validation ();
+                return;
+            }
         }
 
         if ( ship.LaseumUnits == 0 && !ship.LaseumEmergencyUnit )

@@ -18,6 +18,8 @@ public class SlerpCoroutine : MonoBehaviour {
     [SerializeField] protected bool invert_distance_effect = false; // can be used to invert the effects of remaining_distance_factor
     [SerializeField] protected bool invert_angle_effect = false; // can be used to invert the effects of remaining_angle_factor
 
+    bool rotate = true;
+
     public Vector3 TargetPosition
     {
         get { return target_position; }
@@ -26,6 +28,12 @@ public class SlerpCoroutine : MonoBehaviour {
     public Quaternion TargetRotation
     {
         get { return target_rotation; }
+    }
+
+    public bool Rotate
+    {
+        get {return rotate;}
+        set {rotate = value;}
     }
 
     void Awake ()
@@ -94,7 +102,7 @@ public class SlerpCoroutine : MonoBehaviour {
             // apply the translation relative to Time.deltaTime, applying 2 kinds of smoothing factors
             this.transform.position = Vector3.Slerp (this.transform.position, target_position,
                 (translational_movement_factor + remaining_distance_factor * Mathf.Abs (remaining_distance_inversion_factor + (remaining_dist / initial_distance_to_target ) )) * Time.deltaTime);
-            this.transform.rotation = Quaternion.Slerp (this.transform.rotation, target_rotation,
+            if (rotate) this.transform.rotation = Quaternion.Slerp (this.transform.rotation, target_rotation,
                 (rotational_movement_factor + remaining_angle_factor * Mathf.Abs (remaining_angle_inversion_factor + (remaining_angle / initial_angle_to_target ) )) * Time.time);
 
             yield return null;

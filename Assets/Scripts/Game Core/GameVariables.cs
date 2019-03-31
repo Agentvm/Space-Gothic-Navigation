@@ -23,7 +23,7 @@ public class GameVariables : MonoBehaviour
         }
                 
         // add a ship to the galaxy
-        GameObject ship = (GameObject)Instantiate(Resources.Load("Ship") );
+        Instantiate(Resources.Load("Ship") );
         Ship ship_script_reference = Ship.Instance (); //ship.GetComponent<Ship> ();
         ship_script_reference.initialize (galaxy_script_reference, galaxy_script_reference.get_system ("Sol").SpaceStation, "Starship Enterprise");
 
