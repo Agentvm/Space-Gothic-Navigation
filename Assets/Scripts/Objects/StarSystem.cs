@@ -154,9 +154,9 @@ public class StarSystem : MonoBehaviour {
 
         string name = "";
         if (planets.Count == 0)
-            name = ((planets.Count + 1) + "st planet of " + this.name).ToString ();
+            name = ((planets.Count + 1) + "st planet ");
         else
-            name = ((planets.Count + 1) + "nd planet of " + this.name).ToString ();
+            name = ((planets.Count + 1) + "nd planet");
 
         GameObject planet = (GameObject)Instantiate(Resources.Load("Planet"), this.transform );
         planet.GetComponent<Planet> ().initialize (position, name, "WK", this);

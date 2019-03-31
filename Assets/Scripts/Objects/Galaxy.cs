@@ -88,7 +88,13 @@ public class Galaxy : MonoBehaviour
     public void add_random_system ( )
     {
         GameObject system = (GameObject)Instantiate(Resources.Load("StarSystem"), this.transform );
-        system.GetComponent<StarSystem> ().initialize (this );
+        StarSystem system_script_reference = system.GetComponent<StarSystem> ();
+        system_script_reference.initialize (this);
+        int range = Random.Range (0, 3);
+        for ( int i = 0; i < range; i++ )
+        {
+            system_script_reference.add_random_planet ();
+        }
         systems.Add (system.GetComponent<StarSystem> ());
     }
 

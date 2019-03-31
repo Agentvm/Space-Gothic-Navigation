@@ -26,7 +26,7 @@ public class GameVariables : MonoBehaviour
         Instantiate(Resources.Load("Ship") );
         Ship ship_script_reference = Ship.Instance (); //ship.GetComponent<Ship> ();
         ship_script_reference.initialize (galaxy_script_reference, galaxy_script_reference.get_system ("Sol").SpaceStation, "Starship Enterprise");
-
+        
         // Focus main Camera
         Camera.main.GetComponent<OrbitCameraZoom> ().focus_main_camera (galaxy_script_reference );
 
