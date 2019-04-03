@@ -486,15 +486,21 @@ public class Ship : MonoBehaviour {
         // move the ship one step along the path
         //this.transform.position = path[1];
         path.RemoveAt (0);
-        if (path.Count > 1)
-            transform.LookAt (path[1]);
-        if (path.Count > 0)
+        if ( path.Count > 0 )
         {
+            // Look at
+            if ( path.Count > 1 )
+                transform.LookAt (path[1]);
+            else
+                transform.LookAt (goal);
+
+            // Translate
             SlerpCoroutine slerp = this.GetComponent<SlerpCoroutine> ();
 
             slerp.Rotate = false;
             slerp.setTarget (path[0], transform.rotation);
         }
+        
 
 
         plot_path ();

@@ -100,7 +100,7 @@ public class SlerpCoroutine : MonoBehaviour {
 
 
             // apply the translation relative to Time.deltaTime, applying 2 kinds of smoothing factors
-            this.transform.position = Vector3.Slerp (this.transform.position, target_position,
+            this.transform.position = Vector3.Lerp (this.transform.position, target_position,
                 (translational_movement_factor + remaining_distance_factor * Mathf.Abs (remaining_distance_inversion_factor + (remaining_dist / initial_distance_to_target ) )) * Time.deltaTime);
             if (rotate) this.transform.rotation = Quaternion.Slerp (this.transform.rotation, target_rotation,
                 (rotational_movement_factor + remaining_angle_factor * Mathf.Abs (remaining_angle_inversion_factor + (remaining_angle / initial_angle_to_target ) )) * Time.time);
